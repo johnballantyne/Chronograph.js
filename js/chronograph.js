@@ -1,8 +1,21 @@
+var Chronograph = function (action) {
+    this.time = 0;
+    this.interval = 20;
+    this.action = action;
+};
+
+Chronograph.prototype.stop = function() {
+    if (this.handler != null) window.clearTimeout(this.handler);
+    this.handler = null;
+};
+
 var Stopwatch = function (action) {
     this.time = 0;
     this.interval = 20;
     this.action = action;
 };
+
+Stopwatch.prototype = new Chronograph();
 
 Stopwatch.prototype.start = function() {
     this.starttime = new Date().getTime();
@@ -15,12 +28,6 @@ Stopwatch.prototype.start = function() {
     }
     this.handler = window.setTimeout(tick, this.interval)
 };
-
-Stopwatch.prototype.stop = function() {
-    if (this.handler != null) window.clearTimeout(this.handler);
-    this.handler = null;
-};
-
 
 function  prettyTime (ms) {
     var min = Math.floor((ms/(1000*60))%60);
