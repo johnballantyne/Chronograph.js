@@ -18,7 +18,7 @@ window.onload = init;
 function keypress( evt ) {
     evt = evt || window.event;
     if ( evt.keyCode == 32 ) {
-        stopwatch.start();
+        stopwatch.toggle();
     }
     if ( evt.keyCode == 13 ) {
         stopwatch.stop();

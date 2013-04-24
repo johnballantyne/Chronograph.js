@@ -1,5 +1,6 @@
-var Chronograph = function() {
-};
+var Chronograph = function() {};
+
+Chronograph.prototype.start = function() {};
 
 Chronograph.prototype.stop = function() {
     if ( this.handler != null )
@@ -7,10 +8,18 @@ Chronograph.prototype.stop = function() {
     this.handler = null;
 };
 
+Chronograph.prototype.toggle = function() {
+    if ( this.handler != null )
+        this.stop();
+    else
+        this.start();
+}
+
 Chronograph.prototype.reset = function() {
     this.stop();
     this.time = 0;
-    this.action();
+    this.action;
+    this.start();
 };
 
 var Stopwatch = function( action ) {
