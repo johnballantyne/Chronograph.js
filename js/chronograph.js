@@ -13,13 +13,15 @@ Chronograph.prototype.toggle = function() {
         this.stop();
     else
         this.start();
-}
+};
 
 Chronograph.prototype.reset = function() {
     this.stop();
     this.time = 0;
-    this.action;
-    this.start();
+    this.action();
+
+    if ( this.handler != null )
+        this.start();
 };
 
 var Stopwatch = function( action ) {
@@ -47,10 +49,10 @@ function  prettyTime( ms ) {
     var sec = Math.floor( ms / 1000 ) % 60;
     var mili = Math.floor( ms % 1000 / 10 );
     return this.pad( min, 2 ) + ":" + this.pad( sec, 2 ) + "." + this.pad( mili, 2 );
-};
+}
 
 function pad ( n, width, z ) {
     z = z || '0';
     n = n + '';
     return n.length >= width ? n : new Array( width - n.length + 1 ).join( z ) + n;
-};
+}

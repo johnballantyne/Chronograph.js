@@ -2,16 +2,18 @@ document.onkeydown = keypress;
 var stopwatch;
 
 var updateStopwatch = function() {
-    if ( stopwatch.time >= 10000 ) {
+    if ( stopwatch.time >= 5000 ) {
         stopwatch.stop();
-        stopwatch.time = Math.min( 10000, stopwatch.time );
+        stopwatch.time = Math.min( 5000, stopwatch.time );
+        document.getElementById( "bell" ).play();
     }
     document.getElementById( "chrono" ).innerHTML = prettyTime( stopwatch.time );
-}
+    document.getElementById( "prog").setAttribute( "value", stopwatch.time/5000 );
+};
 
 function init () {
     stopwatch = new Stopwatch( updateStopwatch );
-};
+}
 
 window.onload = init;
 
@@ -26,4 +28,4 @@ function keypress( evt ) {
     if ( evt.keyCode == 27 ) {
         stopwatch.reset();
     }
-};
+}
