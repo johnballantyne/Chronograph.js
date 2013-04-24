@@ -5,7 +5,8 @@ var Chronograph = function (action) {
 };
 
 Chronograph.prototype.stop = function() {
-    if (this.handler != null) window.clearTimeout(this.handler);
+    if (this.handler != null)
+        window.clearTimeout(this.handler);
     this.handler = null;
 };
 
@@ -18,7 +19,7 @@ var Stopwatch = function (action) {
 Stopwatch.prototype = new Chronograph();
 
 Stopwatch.prototype.start = function() {
-    this.starttime = new Date().getTime();
+    this.starttime = new Date().getTime() - this.time;
 
     var self = this;
     function tick() {

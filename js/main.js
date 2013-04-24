@@ -20,4 +20,7 @@ function keypress(evt) {
     if (evt.keyCode == 32) {
         stopwatch.start();
     }
+    if (evt.keyCode == 13) {
+        stopwatch.stop();
+    }
 };
