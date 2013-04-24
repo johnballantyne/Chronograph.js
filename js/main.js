@@ -23,4 +23,7 @@ function keypress(evt) {
     if (evt.keyCode == 13) {
         stopwatch.stop();
     }
+    if (evt.keyCode == 27) {
+        stopwatch.reset();
+    }
 };

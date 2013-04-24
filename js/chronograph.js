@@ -10,6 +10,12 @@ Chronograph.prototype.stop = function() {
     this.handler = null;
 };
 
+Chronograph.prototype.reset = function () {
+    this.stop();
+    this.time = 0;
+    this.action();
+}
+
 var Stopwatch = function (action) {
     this.time = 0;
     this.interval = 20;
