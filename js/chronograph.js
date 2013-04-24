@@ -16,12 +16,15 @@ Chronograph.prototype.toggle = function() {
 };
 
 Chronograph.prototype.reset = function() {
+    if ( this.handler != null )
+        var restart = true;
     this.stop();
     this.time = 0;
     this.action();
 
-    if ( this.handler != null )
+    if ( restart )
         this.start();
+
 };
 
 var Stopwatch = function( action ) {
