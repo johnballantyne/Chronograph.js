@@ -1,4 +1,6 @@
-var Chronograph = function() {};
+var Chronograph = function() {
+    this.interval = 20;
+};
 
 Chronograph.prototype.start = function() {};
 
@@ -18,19 +20,19 @@ Chronograph.prototype.toggle = function() {
 Chronograph.prototype.reset = function() {
     if ( this.handler != null )
         var restart = true;
+
     this.stop();
-    this.time = 0;
+    this.time = this.resettime;
     this.action();
 
     if ( restart )
         this.start();
-
 };
 
 var Stopwatch = function( action ) {
-    this.time = 0;
-    this.interval = 20;
     this.action = action;
+    this.resettime = 0;
+    this.time = 0;
 };
 
 Stopwatch.prototype = new Chronograph();
@@ -41,6 +43,31 @@ Stopwatch.prototype.start = function() {
     var self = this;
     function tick() {
         self.time = new Date().getTime() - self.starttime;
+        self.handler = window.setTimeout( tick, self.interval );
+        self.action();
+    }
+    this.handler = window.setTimeout( tick, this.interval );
+};
+
+var Timer = function( action, duration ) {
+    this.action = action;
+    this.resettime = duration;
+    duration != undefined ? this.time = duration : this.time = null;
+};
+
+Timer.prototype = new Chronograph();
+
+Timer.prototype.start = function( duration ) {
+    if ( duration != undefined ) {
+        this.time = duration;
+        this.resettime = duration;
+    }
+    this.endtime = new Date().getTime() + this.time;
+
+    var self = this;
+
+    function tick() {
+        self.time  = self.endtime - new Date().getTime();
         self.handler = window.setTimeout( tick, self.interval );
         self.action();
     }
