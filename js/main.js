@@ -2,8 +2,11 @@ var stopwatch;
 var timer;
 var terminated;
 
-
 //=============================================================================
+// Chronograph.js
+// http://github.com/johnballantyne/chronograph.js
+//=============================================================================
+
 var Chronograph = function () {
     "use strict";
     this.interval = 20;
@@ -117,6 +120,8 @@ var prettyTime = function (ms) {
     return pad(min, 2) + ":" + pad(sec, 2) + "." + pad(mili, 2);
 };
 
+//=============================================================================
+// End Chronograph.js
 //=============================================================================
 
 var updateStopwatch = function () {
