@@ -1,35 +1,47 @@
-var Chronograph = function() {
+var Chronograph = function () {
+    "use strict";
     this.interval = 20;
 };
 
-Chronograph.prototype.start = function() {};
+Chronograph.prototype.start = function () {
+    "use strict";
+};
 
-Chronograph.prototype.stop = function() {
-    if ( this.handler != null )
-        window.clearTimeout( this.handler );
+Chronograph.prototype.stop = function () {
+    "use strict";
+    if (this.handler !== null) {
+        window.clearTimeout(this.handler);
+    }
     this.handler = null;
 };
 
-Chronograph.prototype.toggle = function() {
-    if ( this.handler != null )
+Chronograph.prototype.toggle = function () {
+    "use strict";
+    if (this.handler !== null) {
         this.stop();
-    else
+    } else {
         this.start();
+    }
 };
 
-Chronograph.prototype.reset = function() {
-    if ( this.handler != null )
-        var restart = true;
+Chronograph.prototype.reset = function () {
+    "use strict";
+    var restart;
+    if (this.handler !== null) {
+        restart = true;
+    }
 
     this.stop();
     this.time = this.resettime;
     this.action();
 
-    if ( restart )
+    if (restart) {
         this.start();
+    }
 };
 
-var Stopwatch = function( action ) {
+var Stopwatch = function (action) {
+    "use strict";
     this.action = action;
     this.resettime = 0;
     this.time = 0;
@@ -37,28 +49,33 @@ var Stopwatch = function( action ) {
 
 Stopwatch.prototype = new Chronograph();
 
-Stopwatch.prototype.start = function() {
+Stopwatch.prototype.start = function () {
+    "use strict";
     this.starttime = new Date().getTime() - this.time;
 
     var self = this;
+
     function tick() {
         self.time = new Date().getTime() - self.starttime;
-        self.handler = window.setTimeout( tick, self.interval );
+        self.handler = window.setTimeout(tick, self.interval);
         self.action();
     }
-    this.handler = window.setTimeout( tick, this.interval );
+
+    this.handler = window.setTimeout(tick, this.interval);
 };
 
-var Timer = function( action, duration ) {
+var Timer = function (action, duration) {
+    "use strict";
     this.action = action;
     this.resettime = duration;
-    duration != undefined ? this.time = duration : this.time = null;
+    this.time = (duration !== undefined) ? duration : null;
 };
 
 Timer.prototype = new Chronograph();
 
-Timer.prototype.start = function( duration ) {
-    if ( duration != undefined ) {
+Timer.prototype.start = function (duration) {
+    "use strict";
+    if (duration !== undefined) {
         this.time = duration;
         this.resettime = duration;
     }
@@ -67,22 +84,29 @@ Timer.prototype.start = function( duration ) {
     var self = this;
 
     function tick() {
-        self.time  = self.endtime - new Date().getTime();
-        self.handler = window.setTimeout( tick, self.interval );
+        self.time = self.endtime - new Date().getTime();
+        self.handler = window.setTimeout(tick, self.interval);
         self.action();
     }
-    this.handler = window.setTimeout( tick, this.interval );
+
+    this.handler = window.setTimeout(tick, this.interval);
 };
 
-function  prettyTime( ms ) {
-    var min = Math.floor(( ms / ( 1000 * 60 )) % 60);
-    var sec = Math.floor( ms / 1000 ) % 60;
-    var mili = Math.floor( ms % 1000 / 10 );
-    return this.pad( min, 2 ) + ":" + this.pad( sec, 2 ) + "." + this.pad( mili, 2 );
-}
-
-function pad ( n, width, z ) {
+var pad = function (n, width, z) {
+    "use strict";
+    var padding = "", i;
     z = z || '0';
-    n = n + '';
-    return n.length >= width ? n : new Array( width - n.length + 1 ).join( z ) + n;
-}
+    n = n.toString();
+    for (i = 0; i < width - n.length; i += 1) {
+        padding += z;
+    }
+    return n.length >= width ? n : padding + n;
+};
+
+var prettyTime = function (ms) {
+    "use strict";
+    var min = Math.floor((ms / (1000 * 60)) % 60),
+        sec = Math.floor(ms / 1000) % 60,
+        mili = Math.floor(ms % 1000 / 10);
+    return pad(min, 2) + ":" + pad(sec, 2) + "." + pad(mili, 2);
+};
