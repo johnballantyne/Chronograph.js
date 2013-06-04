@@ -1,38 +1,39 @@
-document.onkeydown = keypress;
 var stopwatch;
 var timer;
 var terminated;
 
-var updateStopwatch = function() {
-    if ( stopwatch.time >= 10000 ) {
+var updateStopwatch = function () {
+    "use strict";
+    if (stopwatch.time >= 10000) {
         stopwatch.stop();
         terminated = true;
-        stopwatch.time = Math.min( 10000, stopwatch.time );
-        document.getElementById( "bell" ).play();
+        stopwatch.time = Math.min(10000, stopwatch.time);
+        document.getElementById("bell").play();
     }
-    document.getElementById( "stopwatch" ).innerHTML = prettyTime( stopwatch.time );
-    document.getElementById( "stopwatchprog").setAttribute( "value", ( stopwatch.time / 10000 ));
+    document.getElementById("stopwatch").innerHTML = prettyTime(stopwatch.time);
+    document.getElementById("stopwatchProgress").setAttribute("value", (stopwatch.time / 10000).toString());
 };
 
-var updateTimer = function() {
-    if ( timer.time <= 0 ) {
+var updateTimer = function () {
+    "use strict";
+    if (timer.time <= 0) {
         timer.stop();
-        timer.time = Math.max( 0, timer.time );
+        timer.time = Math.max(0, timer.time);
     }
-    document.getElementById( "timer" ).innerHTML = prettyTime( timer.time );
-    document.getElementById( "timerprog" ).setAttribute( "value", ( timer.time / 10000 ));
+    document.getElementById("timer").innerHTML = prettyTime(timer.time);
+    document.getElementById("timerProgress").setAttribute("value", (timer.time / 10000));
 };
 
-function init () {
-    stopwatch = new Stopwatch( updateStopwatch );
-    timer = new Timer( updateTimer, 10000 );
-}
+var init = function () {
+    "use strict";
+    stopwatch = new Stopwatch(updateStopwatch);
+    timer = new Timer(updateTimer, 10000);
+};
 
-window.onload = init;
-
-function keypress( evt ) {
+var keypress = function (evt) {
+    "use strict";
     evt = evt || window.event;
-    if ( evt.keyCode == 32 ) {
+    if (evt.keyCode === 32) {
         if (terminated === true) {
             timer.reset();
             stopwatch.reset();
@@ -41,8 +42,11 @@ function keypress( evt ) {
         stopwatch.toggle();
         timer.toggle();
     }
-    if ( evt.keyCode == 27 ) {
+    if (evt.keyCode === 27) {
         timer.reset();
         stopwatch.reset();
     }
-}
+};
+
+document.onkeydown = keypress;
+window.onload = init;
