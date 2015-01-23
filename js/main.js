@@ -21,7 +21,7 @@ Chronograph.prototype.stop = function () {
     if (this.handler !== null) {
         window.clearTimeout(this.handler);
     }
-    this.handler = null;
+    this.handler = null
 };
 
 Chronograph.prototype.toggle = function () {
